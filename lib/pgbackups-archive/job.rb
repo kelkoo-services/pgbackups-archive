@@ -13,8 +13,8 @@ class PgbackupsArchive::Job
   end
 
   def initialize(attrs={})
-    @app = attrs.fetch(:app)
-    @database = attrs.fetch(:database, 'DATABASE_URL')
+    @app = attrs.fetch(:app, ENV['PGBACKUPS_APP'])
+    @database = attrs.fetch(:database, ENV['PGBACKUPS_DATABASE'] || 'DATABASE_URL')
     Heroku::Command.load
     @client = Heroku::Command::Pg.new([], :app => @app)
   end
